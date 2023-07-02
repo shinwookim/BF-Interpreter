@@ -52,4 +52,4 @@ Although there are some variations among various Brainfuck specs found online, t
 3. Output interprets the unsigned value in each cell as a character using ASCII symbol table.
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
