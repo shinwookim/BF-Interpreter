@@ -4,7 +4,6 @@ A light-weight [Brainfuck](https://en.wikipedia.org/wiki/Brainfuck) interpreter 
 
 
 ## What is Brainfuck?
-
 **Brainfuck** is an [esoteric programming language](https://en.wikipedia.org/wiki/Esoteric_programming_language "Esoteric programming language") created in 1993 by Urban Müller.
 
 Notable for its extreme minimalism, the language consists of only eight simple commands, a [data pointer](https://en.wikipedia.org/wiki/Data_pointer "Data pointer") and an [instruction pointer](https://en.wikipedia.org/wiki/Instruction_pointer "Instruction pointer"). While it is fully [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness "Turing completeness"), it is not intended for practical use, but to challenge and amuse [programmers](https://en.wikipedia.org/wiki/Programmers "Programmers"). Brainfuck requires one to break commands into microscopic steps.
@@ -31,16 +30,21 @@ At run-time, the interpreter may prompt user for input when it encounters a `,` 
 
 Because this may dirty the terminal output, the interpreter firsts redirects all output to a temporary buffer and prints the entire output to a cleaned terminal just before terminating.
 ## Usage
-
-1. Use the provided Makefile to compile the source
+Run using the example "Hello, World!" program (`hello_world.bf`)
 ```sh
-make
+# Using GNU make
+make run
+# $ BF File: hello_world.bf
+# Hello, World!
 ```
-2. Test using the example "Hello, World!" program (`hello.bf`)
+
+### Web Version (using WASM)
+The interpreter has also been compiled using web assembly and presented ina pretty web format [here]().
+
+To compile locally
 ```sh
-./bf ./hello.bf
-# Or using the Makefile
-make test
+# Requires emcc
+make web
 ```
 
 (Program expects Brainfuck programs(`*.bf`) to follow the specifications outlined on [Wikipedia](https://en.wikipedia.org/wiki/Brainfuck).)
