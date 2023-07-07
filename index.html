@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <style>
+    textarea {
+      resize: none;
+      height: 30vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center mt-3 mb-0">Brainfuck Interpreter</h1>
+    <div class="my-0">
+      <div class="row p-3 ">
+        <div class="col-6"><textarea type="text" id="bf-code" name="bf-code" class="w-100"></textarea></div>
+        <div class="col-6"><textarea id="output" class="w-100"></textarea></div>
+      </div>
+      <div class="text-center">
+        <div class="btn-group" role="group" aria-label="Control Buttons">
+          <input type="file" id="file-input" class="btn btn-info" />
+          <button type="button" id="file-load" class="btn btn-primary">Load</button>
+          <button type="button" id="run_BF" class="btn btn-success">Run!</button>
+          <button type="button" id="reset-button" class="btn btn-danger">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container">
+    <h1 id="a-brainfuck-interpreter">A BrainFuck Interpreter</h1>
+    <p>A light-weight <a href="https://en.wikipedia.org/wiki/Brainfuck"> Brainfuck </a> interpreter written using C
+      <sup>And compiled in WebAssembly</sup>.<br>
+    </p>
+    <div class="text-center">
+      <a class="btn btn-primary mx-auto" href="https://github.com/shinwookim/BF-Interpreter"> GitHub Repository</a>
+    </div>
+
+    <h2 id="what-is-brainfuck-">What is Brainfuck?</h2>
+    <p><strong>Brainfuck</strong> is an <a href="https://en.wikipedia.org/wiki/Esoteric_programming_language"
+        title="Esoteric programming language">esoteric programming language</a> created in 1993 by Urban Müller.</p>
+    <p>Notable for its extreme minimalism, the language consists of only eight simple commands, a <a
+        href="https://en.wikipedia.org/wiki/Data_pointer" title="Data pointer">data pointer</a> and an <a
+        href="https://en.wikipedia.org/wiki/Instruction_pointer" title="Instruction pointer">instruction pointer</a>.
+      While it is fully <a href="https://en.wikipedia.org/wiki/Turing_completeness" title="Turing completeness">Turing
+        complete</a>, it is not intended for practical use, but to challenge and amuse <a
+        href="https://en.wikipedia.org/wiki/Programmers" title="Programmers">programmers</a>. Brainfuck requires one to
+      break commands into microscopic steps.</p>
+    <p>The language&#39;s name is a reference to the slang term <em><a href="https://en.wiktionary.org/wiki/brainfuck"
+          title="wikt:brainfuck">brainfuck</a></em>, which refers to things so complicated or unusual that they exceed
+      the limits of one&#39;s understanding, as it was not meant or made for designing actual software but to challenge
+      the boundaries of <a href="https://en.wikipedia.org/wiki/Computer_programming"
+        title="Computer programming">computer programming</a>.</p>
+    <p>(From <a href="https://en.wikipedia.org/wiki/Brainfuck">Wikipedia</a>)</p>
+    <h3 id="commands">Commands</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Token</th>
+          <th>Effect</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&gt;</code></td>
+          <td>Increment the data pointer</td>
+        </tr>
+        <tr>
+          <td><code>&lt;</code></td>
+          <td>Decrement the data pointer</td>
+        </tr>
+        <tr>
+          <td><code>+</code></td>
+          <td>Increment the byte at the data pointer</td>
+        </tr>
+        <tr>
+          <td><code>-</code></td>
+          <td>Decrement the byte at the data pointer</td>
+        </tr>
+        <tr>
+          <td><code>.</code></td>
+          <td>Output the byte at the data pointer</td>
+        </tr>
+        <tr>
+          <td><code>,</code></td>
+          <td>Accept one byte of input and store at data pointer</td>
+        </tr>
+        <tr>
+          <td><code>[</code></td>
+          <td>If byte at data pointer is zero, jump to command after matching ]</td>
+        </tr>
+        <tr>
+          <td><code>]</code></td>
+          <td>If byte at data pointer is not zero, jump to command after matching [</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="usage">Usage</h2>
+    <p>Run using the example &quot;Hello, World!&quot; program (<code>hello_world.bf</code>)</p>
+    <pre><code class="lang-sh"><span class="hljs-comment"># Using GNU make</span>
+    make <span class="hljs-keyword">run</span><span class="bash">
+    <span class="hljs-comment"># $ BF File: hello_world.bf</span>
+    </span><span class="hljs-comment"># Hello, World!</span>
+    </code></pre>
+    <h3 id="web-version-using-wasm-">Web Version (using WASM)</h3>
+    <p>The interpreter has also been compiled using web assembly and presented ina pretty web format <a
+        href="">here</a>.</p>
+    <p>To compile locally</p>
+    <pre><code class="lang-sh"><span class="hljs-meta"># Requires emcc</span>
+    <span class="hljs-built_in">make</span> web
+    </code></pre>
+    <p>(Program expects Brainfuck programs(<code>*.bf</code>) to follow the specifications outlined on <a
+        href="https://en.wikipedia.org/wiki/Brainfuck">Wikipedia</a>.)</p>
+    <h3 id="other-notes">Other Notes</h3>
+    <p>Although there are some variations among various Brainfuck specs found online, this interpreter follows the one
+      on Wikipedia. This means:</p>
+    <ol>
+      <li>The data tape consists of 30,000 cells, each of one byte.</li>
+      <li>Contents of each cell is unsigned (ranging 0 - 255).</li>
+      <li>Output interprets the unsigned value in each cell as a character using ASCII symbol table.<h2 id="license">
+          License</h2>
+      </li>
+    </ol>
+    <p><a href="LICENSE">MIT</a></p>
+
+  </div>
+  <script src="static/demo.js">  </script>
+  <script async type="text/javascript" src="index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
