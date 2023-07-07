@@ -39,7 +39,8 @@ make run
 ```
 
 ### Web Version (using WASM)
-The interpreter has also been compiled using web assembly and presented ina pretty web format [here]().
+The interpreter has also been compiled using web assembly and presented ina pretty web format [here](https://shinwookim.github.io/BF-Interpreter/).
+![image](https://github.com/shinwookim/BF-Interpreter/assets/29858077/de8c37dc-ade7-48a8-804e-2c58abde38e5)
 
 To compile locally
 ```sh
